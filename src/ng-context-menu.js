@@ -111,18 +111,29 @@
               }
             }
 
+            function handleScroll(event) {
+              if (!$scope.disabled() && opened) {
+                $scope.$apply(function() {
+                  close(ContextMenuService.menuElement);
+                });
+              }
+            }
+
             $document.bind('keyup', handleKeyUpEvent);
             // Firefox treats a right-click as a click and a contextmenu event
             // while other browsers just treat it as a contextmenu event
             $document.bind('click', handleClickEvent);
             $document.bind('contextmenu', handleClickEvent);
+            $document.bind('scroll', handleScroll);
 
             $scope.$on('$destroy', function() {
               //console.log('destroy');
               $document.unbind('keyup', handleKeyUpEvent);
               $document.unbind('click', handleClickEvent);
               $document.unbind('contextmenu', handleClickEvent);
+              $document.unbind('scroll', handleScroll);
             });
+
           }
         };
       }
